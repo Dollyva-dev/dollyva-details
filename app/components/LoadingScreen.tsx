@@ -112,37 +112,37 @@ export function LoadingScreen() {
     // 1. Make it bigger and bigger
     tl.to(logoRef.current, {
       scale: targetScale,
-      duration: 1.5,
+      duration: 1.0,
       ease: "power2.inOut",
     });
 
     if (isInitialAnimation.current) {
       // 2. Fill the letters (acts as loading bar, keeping user waiting)
-      // Overlap slightly with the logo animation and use a faster start ease to remove perceived delay
+      // Overlap completely with the logo animation
       tl.fromTo(textFillRef.current, 
         { clipPath: "inset(0% 100% 0% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.8, ease: "power1.out" },
-        "-=0.3"
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.0, ease: "power1.out" },
+        "<"
       );
 
       // 3. Rest (pause briefly after filling)
-      tl.to({}, { duration: 0.5 });
+      tl.to({}, { duration: 0.2 });
     } else {
       // For page transitions, fill letters concurrently with logo expanding to save time
       tl.fromTo(textFillRef.current, 
         { clipPath: "inset(0% 100% 0% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power1.out" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.0, ease: "power1.out" },
         "<" // Start at the exact same time as the logo expansion
       );
 
       // Brief rest
-      tl.to({}, { duration: 0.2 });
+      tl.to({}, { duration: 0.1 });
     }
 
     // 5. Fade out text before moving logo
     tl.to(textWrapperRef.current, {
       opacity: 0,
-      duration: 0.3,
+      duration: 0.2,
     });
 
     // 6. Animate to the header
